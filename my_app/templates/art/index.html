@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/art/art-index.css" %}">
+{% endblock head %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Art Gallery</h1>
+</section>
+
+<section class="card-container">
+    {% for art in art %}
+    
+    <div class="card">
+        <a href="/art/{{art.id}}">
+            <div class="card-content">
+                <div class="card-img-container">
+                    <img src="{{art.image}}" alt="thumbnail art image">
+                </div>
+                <h2 class="card-title">{{art.title}}</h2>
+                <h4>{{art.artist}}</h4>
+                <p>Completed: {{art.date}}</p>
+                <p>Medium: {{art.medium}}</p>
+                <p>Movement: {{art.movement}}</p>
+            </div>
+        </a>
+    </div>
+    
+    {% endfor %}
+</section>
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/art/art-detail.css" %}">
+{% endblock head %}
+
+{% block content %}
+<section class="cat-container">
+    <div class="cat-img">
+        <img src="{{art.image}}" alt="thumbnail art image">
+    </div>
+    <div class="cat-details">
+        <h1>{{art.title}}</h1>
+        <h2>{{art.artist}}</h2>
+        <p>Completed: {{art.date}}</p>
+        <p>Medium: {{art.medium}}</p>
+        <p>Movement: {{art.movement}}</p>
+    </div>
+</section>
+{% endblock content %}

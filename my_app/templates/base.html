@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static "images/art_images/starry-night.png" %}" type="image/png">
+
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+
+    {% block head %}{% endblock %}
+
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo-container">
+            <a href="/">
+                <img src="{% static "images/cat_images/header-logo.svg" %}" alt="The Art Collector Logo">
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="/art">Art Gallery</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+</body>
+</html>
