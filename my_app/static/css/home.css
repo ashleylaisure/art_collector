@@ -2,7 +2,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
   height: 100%;
 }
 
@@ -27,6 +26,7 @@ main > section {
   width: 80%;
 }
 
+/*  */
 .login {
   display: flex;
   flex-direction: column;
@@ -64,13 +64,13 @@ main > section {
 }
 
 @media only screen and (min-width: 768px) {
-  main {
+  /* main {
     justify-content: space-around;
   }
 
   main > section {
     width: 40%;
-  }
+  } */
 
   .login {
     border: var(--borders);
@@ -80,7 +80,7 @@ main > section {
     width: 100%;
   }
 
-  .logo-container {
+  /* .logo-container {
     max-width: 520px;
-  }
+  } */
 }
