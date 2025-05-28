@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Art
 # from django.http import HttpResponse
 
@@ -32,3 +33,15 @@ def art_index(request):
 def art_detail(request, art_id):
     art = Art.objects.get(id=art_id)
     return render(request, 'art/detail.html', {'art' : art})
+
+class ArtCreate(CreateView):
+    model = Art
+    fields = '__all__'
+    
+class ArtUpdate(UpdateView):
+    model = Art
+    fields = '__all__'
+
+class ArtDelete(DeleteView):
+    model = Art
+    success_url = '/art/'

@@ -16,6 +16,11 @@
         <p>Completed: {{art.date}}</p>
         <p>Medium: {{art.medium}}</p>
         <p>Movement: {{art.movement}}</p>
+
+        <div class="cat-actions">
+            <a href="{% url "art-update" art.id %}" class="btn warn">Edit</a>
+            <a href="{% url "art-delete" art.id %}" class="btn danger">Delete</a>
+        </div>
     </div>
 </section>
 {% endblock content %}

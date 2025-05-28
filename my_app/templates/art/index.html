@@ -15,7 +15,7 @@
     {% for art in art %}
     
     <div class="card">
-        <a href="/art/{{art.id}}">
+        <a href="{% url "art-detail" art.id %}">
             <div class="card-content">
                 <div class="card-img-container">
                     <img src="{{art.image}}" alt="thumbnail art image">

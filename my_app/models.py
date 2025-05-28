@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Art(models.Model):
@@ -12,6 +13,8 @@ class Art(models.Model):
         ('graphite', 'Graphite/Charcoal'),
         ('color_pencils', 'Colored Pencils'),
         ('mixed_media', 'Mixed Media'),
+        ('sculpture', 'Sculpture'),
+        ('architecture', 'Architecture'),
     ]
     
     movement_choices = [
@@ -36,9 +39,15 @@ class Art(models.Model):
     title = models.CharField(max_length=100)
     artist = models.CharField(max_length=100)
     date = models.CharField(max_length=50)
-    medium = models.CharField(max_length=100, choices=medium_choices, default="oil")
+    medium = models.CharField(max_length=100, choices=medium_choices)
     movement = models.CharField(max_length=100, choices=movement_choices)
     image = models.URLField(max_length=200)
     
     def __str__(self):
         return self.title
+    
+    # Define a method to get the URL for this particular instance
+    def get_absolute_url(self):
+        # Use the 'reverse' function to dynamically find the URL for viewing this models's details
+        return reverse("art-detail", kwargs={'art_id': self.id})
+    

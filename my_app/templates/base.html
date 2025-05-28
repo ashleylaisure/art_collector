@@ -17,15 +17,16 @@
 <body>
     <header>
         <div class="header-logo-container">
-            <a href="/">
+            <a href="{% url "home" %}">
                 <img src="{% static "images/cat_images/header-logo.svg" %}" alt="The Art Collector Logo">
             </a>
         </div>
 
         <nav>
             <ul>
-                <li><a href="/art">Art Gallery</a></li>
-                <li><a href="/about">About</a></li>
+                <li><a href="{% url "art-index" %}">Gallery</a></li>
+                <li><a href="{% url "art-create" %}">Add Artwork</a></li>
+                <li><a href="{% url "about" %}">About</a></li>
             </ul>
         </nav>
     </header>
