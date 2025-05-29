@@ -16,6 +16,10 @@
         <p>Completed: {{art.date}}</p>
         <p>Medium: {{art.medium}}</p>
         <p>Movement: {{art.movement}}</p>
+        <p>Location: {{art.location}}</p>
+        {% if art.viewed %}
+            <p>Viewed in Person: &#9745;</p>
+        {% endif %}
 
         <div class="cat-actions">
             <a href="{% url "art-update" art.id %}" class="btn warn">Edit</a>
@@ -23,31 +27,38 @@
         </div>
     </div>
 </section>
-
-<div class="feedings-toy-container">
+{% comment %} <div class="feeding-toy-container">
     <section class="feedings">
         <div class="subsection-title">
-            <h2>Viewed in Person</h2>
-            <img src="{% static "images/cat_images/cat-cone.svg" %}" alt="An ice cream cone cat">
-            <img src="{% static "images/cat_images/cat-onigiri.svg" %}" alt="An ice cream cone cat">
-            <img src="{% static "images/cat_images/kitty-kabob.svg" %}" alt="An ice cream cone cat">
+            <h2>Master Copies</h2>
+            <img src="" alt="">
+            <img src="" alt="">
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Museum</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for viewing in art.viewing_set.all %}
-                <tr>
-                    <td>{{viewing.date}}</td>
-                    <td>{{viewing.museum}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        <form method="post" class="subsection-content" autocomplete="off">
+            {% csrf_token %}
+            {{copy_form.as_p}}
+            <button type="submit" class="btn submit">Add Master Copy</button>
+        </form>
+
+        <div>
+        {% for copy in art.copy_set.all %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="cat-img">
+                        <img src="{{copy.image}}" alt="thumbnail art image">
+                    </div>
+                    <div class="cat-details">
+                        <h2>{{copy.artist}}</h2>
+                        <p>{{copy.date}}</p>
+                        <p>{{copy.notes}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
     </section>
-</div>
+</div> {% endcomment %}
+
 {% endblock content %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Art
+from .forms import CopyForm
 # from django.http import HttpResponse
 
 # class Art:
@@ -32,7 +33,13 @@ def art_index(request):
 
 def art_detail(request, art_id):
     art = Art.objects.get(id=art_id)
-    return render(request, 'art/detail.html', {'art' : art})
+    copy_form = CopyForm()
+    return render(request, 
+                'art/detail.html', 
+                {'art' : art},
+                {'copy_form' : copy_form}
+                )
+
 
 class ArtCreate(CreateView):
     model = Art

@@ -21,6 +21,7 @@
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
+  object-position: top;
 }
 
 .usr-img {
@@ -35,16 +36,19 @@
 
 .card h2 {
   margin: 10px 0;
+
   font-size: var(--font-xl);
 }
 
 .card h4 {
   margin: 10px 0;
   font-size: var(--font-l);
+
   font-weight: 600;
 }
 
 .card p {
   margin: 5px 0;
   font-size: var(--font-reg);
+
 }

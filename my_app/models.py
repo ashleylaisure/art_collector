@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 
 medium_choices = (
     ('oil', 'Oil Paint'),
@@ -38,6 +39,8 @@ class Art(models.Model):
     date = models.CharField('Year Completed', max_length=50)
     medium = models.CharField(max_length=100, choices=medium_choices)
     movement = models.CharField(max_length=100, choices=movement_choices)
+    location = models.CharField(max_length=200, default="unknown")
+    viewed = models.BooleanField("Viewed in Person", default=False)
     image = models.URLField(max_length=200)
     
     def __str__(self):
@@ -49,11 +52,13 @@ class Art(models.Model):
         return reverse("art-detail", kwargs={'art_id': self.id})
     
     
-class Viewing(models.Model):
-    date = models.DateField()
-    museum = models.CharField(max_length=200)
+class Copy(models.Model):
+    artwork = models.ForeignKey(Art, on_delete=models.CASCADE)
+    artist = models.CharField(max_length=100)
+    date = models.DateField('Date Painted', default=date.today)
+    notes = models.TextField(max_length=250)
+    image = models.URLField(max_length=200)
     
-    art = models.ForeignKey(Art, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f"{self.museum} on {self.date}"
+        return self.artist

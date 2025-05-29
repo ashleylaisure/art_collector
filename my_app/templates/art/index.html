@@ -22,9 +22,9 @@
                 </div>
                 <h2 class="card-title">{{art.title}}</h2>
                 <h4>{{art.artist}}</h4>
-                <p>Completed: {{art.date}}</p>
-                <p>Medium: {{art.medium}}</p>
-                <p>Movement: {{art.movement}}</p>
+                {% if art.viewed %}
+                <p>&#9745;</p>
+                {% endif %}
             </div>
         </a>
     </div>
