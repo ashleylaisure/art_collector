@@ -4,4 +4,4 @@ from .models import Copy
 class CopyForm(forms.ModelForm):
     class Meta:
         model = Copy
-        fields = '__all__'
+        fields = ['artist', 'date', 'notes', 'image']

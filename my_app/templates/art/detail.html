@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static "css/art/art-detail.css" %}">
+<link rel="stylesheet" href="{% static "css/art/art-detail.css" %}" />
 {% endblock head %}
 
 {% block content %}
@@ -27,22 +27,30 @@
         </div>
     </div>
 </section>
-{% comment %} <div class="feeding-toy-container">
+
+<div class="feeding-toy-container">
     <section class="feedings">
         <div class="subsection-title">
             <h2>Master Copies</h2>
             <img src="" alt="">
             <img src="" alt="">
         </div>
-
-        <form method="post" class="subsection-content" autocomplete="off">
+        <h3>Add A Master Copy</h3>
+        <form
+            
+            method="post" 
+            class="subsection-content" 
+            autocomplete="off"
+            >
             {% csrf_token %}
             {{copy_form.as_p}}
-            <button type="submit" class="btn submit">Add Master Copy</button>
+            <button type="submit" class="btn submit">Add</button>
         </form>
 
-        <div>
-        {% for copy in art.copy_set.all %}
+        <h3>Other Master Copies</h3>
+        {% if art.copy_set.all.count %}
+
+            {% for copy in art.copy_set.all %}
             <div class="card">
                 <div class="card-content">
                     <div class="cat-img">
@@ -55,10 +63,14 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
-        </div>
-
+            {% endfor %}
+        {% else %}
+            <div class="subsection-content">
+                <p>Add a new Master Copy</p>
+            </div>
+        {% endif %}
+        
     </section>
-</div> {% endcomment %}
+</div>
 
 {% endblock content %}

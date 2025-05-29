@@ -59,6 +59,5 @@ class Copy(models.Model):
     notes = models.TextField(max_length=250)
     image = models.URLField(max_length=200)
     
-    
     def __str__(self):
         return self.artist

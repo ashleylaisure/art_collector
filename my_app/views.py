@@ -34,11 +34,10 @@ def art_index(request):
 def art_detail(request, art_id):
     art = Art.objects.get(id=art_id)
     copy_form = CopyForm()
-    return render(request, 
-                'art/detail.html', 
-                {'art' : art},
-                {'copy_form' : copy_form}
-                )
+    return render(request, 'art/detail.html', {
+                'art' : art,
+                'copy_form' : copy_form
+                })
 
 
 class ArtCreate(CreateView):

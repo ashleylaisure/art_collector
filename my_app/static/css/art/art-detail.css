@@ -74,7 +74,6 @@
 
 .cat-details h1 {
   font-size: var(--font-xxl);
-  color: blue;
   margin: 15px 0 3px;
 }
 
@@ -83,19 +82,16 @@
   margin: 0 0 10px;
   margin-top: 0;
   margin-bottom: 10px;
-  color: blue;
 }
 
 .cat-details h3 {
   margin: 20px 0 10px;
   font-size: var(--font-l);
-  color: blue;
 }
 
 .cat-details p {
   font-size: var(--font-reg);
   margin: 5px 0;
-  color: blue;
 }
 
 .feedings-toy-container > section {
