@@ -9,4 +9,5 @@ urlpatterns = [
     path('art/create/', views.ArtCreate.as_view(), name='art-create'),
     path('art/<int:pk>/update', views.ArtUpdate.as_view(), name='art-update'),
     path('art/<int:pk>/delete/', views.ArtDelete.as_view(), name="art-delete"),
+    path('art/<int:art_id>/add-copy/', views.add_copy, name="add-copy"),
 ]

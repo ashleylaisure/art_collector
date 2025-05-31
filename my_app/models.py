@@ -53,11 +53,15 @@ class Art(models.Model):
     
     
 class Copy(models.Model):
-    artwork = models.ForeignKey(Art, on_delete=models.CASCADE)
+    art = models.ForeignKey(Art, on_delete=models.CASCADE)
     artist = models.CharField(max_length=100)
-    date = models.DateField('Date Painted', default=date.today)
-    notes = models.TextField(max_length=250)
+    date = models.DateField('Date Painted')
+    notes = models.CharField(max_length=150)
     image = models.URLField(max_length=200)
     
     def __str__(self):
-        return self.artist
+        return f"{self.artist} painted on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
+        # "-" newest dates with appear first

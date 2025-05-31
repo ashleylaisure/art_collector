@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Art
 from .forms import CopyForm
@@ -39,6 +39,17 @@ def art_detail(request, art_id):
                 'copy_form' : copy_form
                 })
 
+def add_copy(request, art_id):
+    # create a ModelForm instance using the data in request.POST
+    form = CopyForm(request.POST)
+    # validate the form
+    if form.is_valid():
+        # don't save the form to the db until it
+        # has the art_id assigned
+        new_copy = form.save(commit=False)
+        new_copy.art_id = art_id
+        new_copy.save()
+    return redirect('art-detail', art_id = art_id)
 
 class ArtCreate(CreateView):
     model = Art
