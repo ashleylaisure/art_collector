@@ -71,6 +71,55 @@
         {% endif %}
         
     </section>
+
+    <section class="toys">
+        <div class="subsection-title">
+            <h2>Lists</h2>
+            <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+        </div>
+
+        <h3></h3>
+        <div class="subsection-content">
+            {% if art.lists.count %}
+                {% for list in art.lists.all %}
+                <div class="toy-container">
+                    <div class="color-block" style="background-color: {{list.color}}"></div>
+                    <a href="{% url "list-detail" list.id %}">
+                        <p>{{list.name}} : {{list.notes}}</p>
+                    </a>
+                    <form action="{% url "remove-list" art.id list.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove from List</button>
+                    </form>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p class="no-toys">{{art.title}} - has not been assigned to a List</p>
+            {% endif %}
+        </div>
+        
+        <h3>Available Lists</h3>
+        <div class="subsection-content">
+            {% if lists.count %}
+                {% for list in lists.all %}
+                    <div class="toy-container">
+                        <div class="color-block" style="background-color: {{list.color}}"></div>
+                        <a href="{% url "list-detail" list.id %}">
+                            <p>{{list.name}}</p>
+                        </a>
+                        <form action="{% url "associate-list" art.id list.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn submit">Add to List</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            {% else %}
+                    <p class="all-toys">{{art.title}} is on all the available lists</p>
+            {% endif %}
+        </div>
+    </section>
 </div>
 
 {% endblock content %}

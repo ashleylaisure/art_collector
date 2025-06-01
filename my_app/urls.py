@@ -15,4 +15,6 @@ urlpatterns = [
     path('list/', views.ListList.as_view(), name='list-index'),
     path('list/<int:pk>/update', views.ListUpdate.as_view(), name='list-update'),
     path('list/<int:pk>/delete/', views.ListDelete.as_view(), name='list-delete'),
+    path('art/<int:art_id>/associate-list/<int:list_id>/', views.associate_list, name='associate-list'),
+    path('art/<int:art_id>/remove-list/<int:list_id>/', views.remove_list, name='remove-list'),
 ]

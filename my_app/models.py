@@ -46,6 +46,17 @@ color_choices = (
     ('tomato', 'Tomato'),
 )
 # Create your models here.
+class List(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20, choices=color_choices)
+    notes = models.CharField(max_length=150)
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse("list-detail", kwargs={"pk": self.id})
+    
 class Art(models.Model):
     title = models.CharField(max_length=100)
     artist = models.CharField(max_length=100)
@@ -55,6 +66,8 @@ class Art(models.Model):
     location = models.CharField(max_length=200, default="unknown")
     viewed = models.BooleanField("Viewed in Person", default=False)
     image = models.URLField(max_length=200)
+    # Add the M:M relationship
+    lists = models.ManyToManyField(List)
     
     def __str__(self):
         return self.title
@@ -79,14 +92,5 @@ class Copy(models.Model):
         ordering = ['-date']
         # "-" newest dates with appear first
         
-class List(models.Model):
-    name = models.CharField(max_length=50)
-    color = models.CharField(max_length=20, choices=color_choices)
-    notes = models.CharField(max_length=150)
-    
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse("list_detail", kwargs={"pk": self.id})
+
     

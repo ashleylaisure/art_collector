@@ -5,13 +5,35 @@
 {% endblock head %}
 
 {% block content %}
-<div class="card" style="border-color:{{list.color}}">
-    <div class="card-bg" style="background-color: {{list.color}}"></div>
-    <div class="card-content">
-        <h2>{{list.name}}</h2>
-        <p>{{list.notes}}</p>
+
+    <div class="card" style="border-color:{{list.color}}">
+        <div class="card-bg" style="background-color: {{list.color}}"></div>
+        <div class="card-content">
+            <h2>{{list.name}}</h2>
+            <p>{{list.notes}}</p>
+        </div>
     </div>
-</div>
-<a href="{% url "list-update" list.id %}" class="btn warn">Edit</a>
-<a href="{% url "list-delete" list.id %}" class="btn danger">Delete</a>
+    <a href="{% url "list-update" list.id %}" class="btn warn">Edit</a>
+    <a href="{% url "list-delete" list.id %}" class="btn danger">Delete</a>
+
+
+<section class="toys">
+    <div class="subsection-title">
+        <h2>Artworks on this List:</h2>
+    </div>
+
+    {% for art in arts %}
+    <div class="toy-container">
+        <div class="color-block" style="background-color: {{list.color}}"></div>
+        <a href="{% url "art-detail" art.id%}">
+            <p>{{art.title}} by {{art.artist}}</p>
+        </a>
+    </div>
+    {% empty %}
+        <p>No artwork assigned yet.</p>
+    {% endfor %}
+
+</section>
+
+
 {% endblock content %}

@@ -34,10 +34,15 @@ def art_index(request):
 
 def art_detail(request, art_id):
     art = Art.objects.get(id=art_id)
+    # fetch all lists
+    # lists = List.objects.all()
+    # only get the lists the artwork has not been assigned to
+    lists_art_is_not_on = List.objects.exclude(id__in = art.lists.all().values_list('id'))
     copy_form = CopyForm()
     return render(request, 'art/detail.html', {
                 'art' : art,
-                'copy_form' : copy_form
+                'copy_form' : copy_form,
+                'lists' : lists_art_is_not_on,
                 })
 
 def add_copy(request, art_id):
@@ -52,9 +57,17 @@ def add_copy(request, art_id):
         new_copy.save()
     return redirect('art-detail', art_id = art_id)
 
+def associate_list(request, art_id, list_id):
+    Art.objects.get(id=art_id).lists.add(list_id)
+    return redirect('art-detail', art_id=art_id)
+
+def remove_list(request, art_id, list_id):
+    Art.objects.get(id=art_id).lists.remove(list_id)
+    return redirect('art-detail', art_id=art_id)
+
 class ArtCreate(CreateView):
     model = Art
-    fields = '__all__'
+    fields = ['title', 'artist', 'date', 'medium', 'movement', 'location', 'viewed', 'image']
     
 class ArtUpdate(UpdateView):
     model = Art
@@ -74,6 +87,12 @@ class ListList(ListView):
 class ListDetail(DetailView):
     model = List
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['arts'] = self.object.art_set.all()
+        return context
+        
+
 class ListUpdate(UpdateView):
     model = List
     fields = '__all__'
