@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Art
+from django.views.generic import ListView, DetailView
+from .models import Art, List
 from .forms import CopyForm
 # from django.http import HttpResponse
 
@@ -62,3 +63,21 @@ class ArtUpdate(UpdateView):
 class ArtDelete(DeleteView):
     model = Art
     success_url = '/art/'
+    
+class ListCreate(CreateView):
+    model = List
+    fields = '__all__'
+    
+class ListList(ListView):
+    model = List
+    
+class ListDetail(DetailView):
+    model = List
+    
+class ListUpdate(UpdateView):
+    model = List
+    fields = '__all__'
+    
+class ListDelete(DeleteView):
+    model = List
+    success_url = '/list/'

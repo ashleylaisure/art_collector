@@ -10,4 +10,9 @@ urlpatterns = [
     path('art/<int:pk>/update', views.ArtUpdate.as_view(), name='art-update'),
     path('art/<int:pk>/delete/', views.ArtDelete.as_view(), name="art-delete"),
     path('art/<int:art_id>/add-copy/', views.add_copy, name="add-copy"),
+    path('list/create', views.ListCreate.as_view(), name='list-create'),
+    path('list/<int:pk>/', views.ListDetail.as_view(), name='list-detail'),
+    path('list/', views.ListList.as_view(), name='list-index'),
+    path('list/<int:pk>/update', views.ListUpdate.as_view(), name='list-update'),
+    path('list/<int:pk>/delete/', views.ListDelete.as_view(), name='list-delete'),
 ]

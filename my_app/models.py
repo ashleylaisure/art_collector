@@ -12,6 +12,7 @@ medium_choices = (
     ('graphite', 'Graphite/Charcoal'),
     ('color_pencils', 'Colored Pencils'),
     ('mixed_media', 'Mixed Media'),
+    ('other', 'Other'),
 )
     
 movement_choices = (
@@ -32,13 +33,25 @@ movement_choices = (
     ('rococo', 'Rococo'),
     ('surrealism', 'Surrealism'),
 )
+color_choices = (
+    ('aliceBlue', 'Alice Blue'),
+    ('aquamarine', 'Aquamarine'),
+    ('chartreuse', 'Chartreuse'),
+    ('coral', 'Coral'),
+    ('crimson', 'Crimson'),
+    ('seaGree', 'Dark Sea Green'),
+    ('deepPink','Deep Pink'),
+    ('dodgerBlue', 'Dodger Blue'),
+    ('slateGray', 'Slate Gray'),
+    ('tomato', 'Tomato'),
+)
 # Create your models here.
 class Art(models.Model):
     title = models.CharField(max_length=100)
     artist = models.CharField(max_length=100)
     date = models.CharField('Year Completed', max_length=50)
     medium = models.CharField(max_length=100, choices=medium_choices)
-    movement = models.CharField(max_length=100, choices=movement_choices)
+    movement = models.CharField(max_length=100, choices=movement_choices, blank=True, null=True)
     location = models.CharField(max_length=200, default="unknown")
     viewed = models.BooleanField("Viewed in Person", default=False)
     image = models.URLField(max_length=200)
@@ -65,3 +78,15 @@ class Copy(models.Model):
     class Meta:
         ordering = ['-date']
         # "-" newest dates with appear first
+        
+class List(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20, choices=color_choices)
+    notes = models.CharField(max_length=150)
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse("list_detail", kwargs={"pk": self.id})
+    

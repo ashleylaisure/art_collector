@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/list/list-detail.css" %}">
+{% endblock head %}
+
+{% block content %}
+<div class="card" style="border-color:{{list.color}}">
+    <div class="card-bg" style="background-color: {{list.color}}"></div>
+    <div class="card-content">
+        <h2>{{list.name}}</h2>
+        <p>{{list.notes}}</p>
+    </div>
+</div>
+<a href="{% url "list-update" list.id %}" class="btn warn">Edit</a>
+<a href="{% url "list-delete" list.id %}" class="btn danger">Delete</a>
+{% endblock content %}
