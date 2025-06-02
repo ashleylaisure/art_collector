@@ -90,7 +90,7 @@ class ArtCreate(LoginRequiredMixin, CreateView):
 
 class ArtUpdate(LoginRequiredMixin, UpdateView):
     model = Art
-    fields = '__all__'
+    fields = ['title', 'artist', 'date', 'medium', 'movement', 'location', 'viewed', 'image']
 
 class ArtDelete(LoginRequiredMixin, DeleteView):
     model = Art
