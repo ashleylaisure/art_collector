@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Art, List
+from .models import Art, List, Copy
 from .forms import CopyForm
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # from django.http import HttpResponse
 
@@ -24,16 +28,22 @@ from django.contrib.auth.views import LoginView
 # ]
 
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
+# def home(request):
+#     return render(request, 'home.html')
+class Home(LoginView):
+    template_name = 'home.html'
 
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def art_index(request):
-    art = Art.objects.all()
+    # art = Art.objects.all()
+    art = Art.objects.filter(user=request.user)
+    # art = request.user.art_set.all()
     return render(request, 'art/index.html', {'art' : art})
 
+@login_required
 def art_detail(request, art_id):
     art = Art.objects.get(id=art_id)
     # fetch all lists
@@ -47,6 +57,7 @@ def art_detail(request, art_id):
                 'lists' : lists_art_is_not_on,
                 })
 
+@login_required
 def add_copy(request, art_id):
     # create a ModelForm instance using the data in request.POST
     form = CopyForm(request.POST)
@@ -59,34 +70,40 @@ def add_copy(request, art_id):
         new_copy.save()
     return redirect('art-detail', art_id = art_id)
 
+@login_required
 def associate_list(request, art_id, list_id):
     Art.objects.get(id=art_id).lists.add(list_id)
     return redirect('art-detail', art_id=art_id)
 
+@login_required
 def remove_list(request, art_id, list_id):
     Art.objects.get(id=art_id).lists.remove(list_id)
     return redirect('art-detail', art_id=art_id)
 
-class ArtCreate(CreateView):
+class ArtCreate(LoginRequiredMixin, CreateView):
     model = Art
     fields = ['title', 'artist', 'date', 'medium', 'movement', 'location', 'viewed', 'image']
     
-class ArtUpdate(UpdateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class ArtUpdate(LoginRequiredMixin, UpdateView):
     model = Art
     fields = '__all__'
 
-class ArtDelete(DeleteView):
+class ArtDelete(LoginRequiredMixin, DeleteView):
     model = Art
     success_url = '/art/'
     
-class ListCreate(CreateView):
+class ListCreate(LoginRequiredMixin, CreateView):
     model = List
     fields = '__all__'
     
-class ListList(ListView):
+class ListList(LoginRequiredMixin, ListView):
     model = List
     
-class ListDetail(DetailView):
+class ListDetail(LoginRequiredMixin, DetailView):
     model = List
     
     def get_context_data(self, **kwargs):
@@ -95,10 +112,28 @@ class ListDetail(DetailView):
         return context
         
 
-class ListUpdate(UpdateView):
+class ListUpdate(LoginRequiredMixin, UpdateView):
     model = List
     fields = '__all__'
     
-class ListDelete(DeleteView):
+class ListDelete(LoginRequiredMixin, DeleteView):
     model = List
     success_url = '/list/'
+    
+    
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('art-index')
+        else:
+            error_message = 'Invalid sign up - try again'
+    # else - Get request, render signup.html
+    form = UserCreationForm()
+    return render(request, 'signup.html', {
+        'form' : form,
+        'error_message' : error_message,
+    })

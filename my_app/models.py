@@ -94,6 +94,3 @@ class Copy(models.Model):
     class Meta:
         ordering = ['-date']
         # "-" newest dates with appear first
-        
-
-    

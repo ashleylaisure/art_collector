@@ -10,5 +10,18 @@
         <img src="{% static "images/art_images/1.png" %}" alt="Text reads: The Art Collector">
     </div>
 </section>
+{% if not user.is_authenticated %}
+    <section>
+        <form action="{% url "home" %}" method="post" class="login">
+            <h1>Login</h1>
+            {% csrf_token %}
+            {{form.as_p}}
+            {% comment %} redirect a usesr back to the route they tried to access after login {% endcomment %}
+            <input type="hidden" name="next" value="{{next}}" />
+            <button type="submit" class="btn submit">Login</button>
+        </form>
+    </section>
+{% endif %}
+
 {% endblock content %}
 

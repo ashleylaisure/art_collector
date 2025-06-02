@@ -6,17 +6,12 @@
 
 {% block content %}
 <div class="page-header">
-    {% if object %}
-    <h1>Edit {{list.name}}</h1>
-    {% else %}
-    <h1>Make a List</h1>
-    {% endif %}
+    <h1>Sign Up</h1>
 </div>
-<form 
-    action=""
-    method="post"
-    class="form-container"
-    autocomplete="off">
+{% if error_message %}
+    <p class="red-text">{{ error_message}}</p>
+{% endif %}
+<form action="" method="post" class="form-container" autocomplete="off">
     {% csrf_token %}
     <table>
         {{form.as_table}}
