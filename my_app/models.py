@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 medium_choices = (
     ('oil', 'Oil Paint'),
@@ -68,6 +69,8 @@ class Art(models.Model):
     image = models.URLField(max_length=200)
     # Add the M:M relationship
     lists = models.ManyToManyField(List)
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.title

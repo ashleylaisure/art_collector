@@ -3,6 +3,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .models import Art, List
 from .forms import CopyForm
+from django.contrib.auth.views import LoginView
+
 # from django.http import HttpResponse
 
 # class Art:
